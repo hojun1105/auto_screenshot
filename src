@@ -1,0 +1,50 @@
+import time
+from datetime import datetime
+from PIL import ImageGrab  ##pip install PILLOW
+import os
+
+
+def createFolder(directory):
+    try:
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+    except OSError:
+        print("Error: Failed to create the directory.")
+
+
+user=input()
+num=1
+
+while num<3:
+
+    time.sleep(10)
+    now = datetime.now()
+
+    img = ImageGrab.grab()
+    yearmonth = now.strftime('%Y_%m%d')
+    hour = int(now.strftime('%H'))
+    minute = int(now.strftime('%M'))
+
+    path = "/Users/jeonghojun/img/" + now.strftime('%m-%d')
+    # 2022_0802_1교시_시작_김유진.jpg
+    createFolder(path)
+
+    if hour <= 13:
+        if 0 <= minute & minute <= 10:
+            img.save("{0}/{1}.png".format(path, yearmonth + "_" + str(hour - 8) + "교시_시작_user" + str(num)), 'png')
+            # print("{0}/{1}.png".format(path, yearmonth + "_" + str(hour - 8) + "교시_시작_user" + str(num)) + "저장됨")
+
+        elif 50 <= minute & minute <= 59:
+            img.save("{0}/{1}.png".format(path, yearmonth + "_" + str(hour - 8) + "교시_끝_user" + str(num)), 'png')
+            # print("{0}/{1}.png".format(path, yearmonth + "_" + str(hour - 8) + "교시_끝_user" + str(num)) + "저장됨")
+
+    elif hour > 13:
+        if 0 <= minute & minute <= 10:
+            img.save("{0}/{1}.png".format(path, yearmonth + "_" + str(hour - 9) + "교시_시작_user" + str(num)), 'png')
+            # print("{0}/{1}.png".format(path, yearmonth + "_" + str(hour - 9) + "교시_시작_user" + str(num)) + " 저장됨")
+
+        elif 50 <= minute & minute <= 59:
+            img.save("{0}/{1}.png".format(path, yearmonth + "_" + str(hour - 9) + "교시_끝_user" + str(num)), 'png')
+            # print("{0}/{1}.png".format(path, yearmonth + "_" + str(hour - 9) + "교시_끝_user" + str(num)) + "저장됨")
+    print("!!")
+    num+=1
